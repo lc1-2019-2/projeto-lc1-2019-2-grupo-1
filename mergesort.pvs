@@ -42,6 +42,7 @@ FORALL (l1, l2 : list[T], x: T) :
   occurrences(merge(l1,l2))(x) =
       occurrences(l1)(x) + occurrences(l2)(x)
 
+
 merge_is_permutation : LEMMA
 FORALL (l1, l2 : list[T]) : 
   permutations(merge(l1,l2), append(l1,l2))
@@ -92,6 +93,21 @@ FORALL (l : list[T]) :
 %%%%% function.                                              %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+perm_app_mergesort: LEMMA
+FORALL (l1, l2: list[T]) :
+ permutations(merge_sort(l1), l1) AND permutations(merge_sort(l2), l2)
+ IMPLIES  permutations(append(merge_sort(l1), merge_sort(l2)), append(l1,l2))
+
+length_suff_menor: LEMMA
+FORALL (l: list[T]):
+ length(l) > 1 IMPLIES length(suffix(l,floor(length(l) / 2))) < length(l)
+
+length_prefix_menor: LEMMA
+FORALL (l: list[T]):
+ length(l) > 1 IMPLIES length(prefix(l,floor(length(l) / 2))) < length(l)
+
+
 merge_sort_is_permutation: CONJECTURE
 FORALL (l : list[T]) :
   permutations(merge_sort(l), l)
@@ -110,6 +126,9 @@ merge_sort_is_conservative: AXIOM
       i < j AND 
       nth(merge_sort(l),m) = nth(l,i) AND
       nth(merge_sort(l),n) = nth(l,j)
+
+
+
 
 end mergesort
 
